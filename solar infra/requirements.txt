@@ -1,0 +1,7 @@
+streamlit
+folium
+streamlit-folium
+beautifulsoup4
+geopy
+psycopg2-binary
+sqlalchemy
