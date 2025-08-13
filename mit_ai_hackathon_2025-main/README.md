@@ -1,31 +1,3 @@
-<img src="figs/banner.png" />
-
-# Mr Sunshine India - Mapping India's Solar Infrastructure
-
-
-|  |  |
-|--|--|
-| **Submission to:** | MIT Global AI Hackathon 2025 |
-| **Track 01:** | Agentic AI for Dataset Building |
-| **Challenge 02:** | "Solar Detective: Mapping India's Solar Infrastructure Using Agentic AI" |
-| **Team:** | **GrindelwaldAI** | 
-| | *Kevin Riehl, ETH Zürich* |
-| | *Shaimaa El-Baklish, ETH Zürich* | 
-
-## Demos On YouTube
-
-<table>
-    <tr>
-        <td> <b>Product Demo</b> </td>
-        <td> <b>Technical Stack</b> </td>
-    </tr>
-    <tr>
-        <td> <a href="https://www.youtube.com/watch?v=x7Je689GEHo"> <img src="figs/thumbnail-01.PNG" /> </a> </td>
-        <td> <a href="https://www.youtube.com/watch?v=mrsucS0p7GE"> <img src="figs/thumbnail-02.PNG" /> </a> </td>
-    </tr>
-</table>
-
-
 ## Description
 India’s solar revolution is surging forward, yet the data on commercial solar projects remains fragmented across government, companies and operators websites. *Mr Sunshine India* addresses this gap with an AI-powered agentic scraping pipeline that automates the discovery, extraction, and organization of publicly available solar infrastructure data across the country.
 
@@ -38,19 +10,6 @@ This project is more than a map. It’s a living, intelligent dashboard that tur
 By uniting these capabilities, *Mr Sunshine India* creates a single source of truth for a diverse range of stakeholders: policymakers can spot regional disparities, investors can act on real-time intelligence, and developers can find and seize new tenders with confidence.
 
 A powerful future capability lies in turning this dashboard into a real-time intelligence engine. With automated agents regularly scraping public data sources and feeding them into a PostgreSQL database, the app can stay up-to-date with new projects, investment opportunities, and tenders—ensuring that stakeholders always have access to the freshest, most relevant insights.
-
-## How to run the app
-
-Prepare your Python Environment
-```
-pip install -r requirements.txt
-```
-
-Run as Streamlit Application (Python-based Front-End in Browser)
-```
-cd ./src/ui
-streamlit run app.py
-```
 
 
 ## Data Sources For Scraping

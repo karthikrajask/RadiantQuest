@@ -1,13 +1,5 @@
 """
-"Mr Sunshine India" - "Solar Detective: Mapping Indiaâ€™s Solar Infrastructure Using Agentic AI"
--------------------------------------------
-Authors:        Kevin Riehl <kriehl@ethz.ch>, Shaimaa El-Baklish <shaimaa.elbaklish@ivt.baug.ethz.ch>
-Organization:   ETH ZÃ¼rich, Institute for Transportation Planning and Systems
-Development:    2025
-Submitted to:   MIT Global AI Hackathon 2025, 
-                Track 01: Agentic AI for Dataset Building
-                Challenge 02: "Solar Detective: Mapping Indiaâ€™s Solar Infrastructure Using Agentic AI"
--------------------------------------------
+
 This script contains functions for the scraping of data from Azurepower:
     https://www.azurepower.com/project-overview?view_all=on&field_project_category_target_id%5B9%5D=9&field_project_category_target_id%5B10%5D=10&field_project_category_target_id%5B11%5D=11&field_project_locations_target_id%5B1%5D=1&field_project_locations_target_id%5B2%5D=2&field_project_locations_target_id%5B15%5D=15&field_project_locations_target_id%5B14%5D=14&field_project_locations_target_id%5B12%5D=12&field_project_locations_target_id%5B3%5D=3&field_project_locations_target_id%5B4%5D=4&field_project_locations_target_id%5B13%5D=13&field_project_locations_target_id%5B5%5D=5&field_project_locations_target_id%5B6%5D=6&field_project_locations_target_id%5B7%5D=7&field_project_locations_target_id%5B8%5D=8
 """

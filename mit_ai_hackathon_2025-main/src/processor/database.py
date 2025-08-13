@@ -1,16 +1,3 @@
-"""
-"Mr Sunshine India" - "Solar Detective: Mapping India’s Solar Infrastructure Using Agentic AI"
--------------------------------------------
-Authors:        Kevin Riehl <kriehl@ethz.ch>, Shaimaa El-Baklish <shaimaa.elbaklish@ivt.baug.ethz.ch>
-Organization:   ETH Zürich, Institute for Transportation Planning and Systems
-Development:    2025
-Submitted to:   MIT Global AI Hackathon 2025, 
-                Track 01: Agentic AI for Dataset Building
-                Challenge 02: "Solar Detective: Mapping India’s Solar Infrastructure Using Agentic AI"
--------------------------------------------
-This script converts the tables into a PostGresSQL Database.
-"""
-
 
 
 

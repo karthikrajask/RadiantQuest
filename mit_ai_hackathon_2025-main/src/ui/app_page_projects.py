@@ -1,24 +1,11 @@
-"""
-"Mr Sunshine India" - "Solar Detective: Mapping India’s Solar Infrastructure Using Agentic AI"
--------------------------------------------
-Authors:        Kevin Riehl <kriehl@ethz.ch>, Shaimaa El-Baklish <shaimaa.elbaklish@ivt.baug.ethz.ch>
-Organization:   ETH Zürich, Institute for Transportation Planning and Systems
-Development:    2025
-Submitted to:   MIT Global AI Hackathon 2025, 
-                Track 01: Agentic AI for Dataset Building
-                Challenge 02: "Solar Detective: Mapping India’s Solar Infrastructure Using Agentic AI"
--------------------------------------------
-This script contains functions for the markers.
-"""
-
-
 
 
 # #############################################################################
 # IMPORTS
 # #############################################################################
+import folium
+import streamlit as st
 import pandas as pd
-
 
 
 
@@ -27,6 +14,104 @@ import pandas as pd
 # METHODS
 # #############################################################################
 
+def generate_filter_pane(i, data):
+    with st.expander("Filters", expanded=True):
+        sources = st.multiselect(
+            "Operator",  # Changed label here
+            data['source'].unique(), 
+            default=data['source'].unique(), 
+            key=f"source_{i}"
+        )
+        
+        # Produced Energy Slider
+        min_energy = float(data['produced_energy'].min()) if 'produced_energy' in data else 0.0
+        max_energy = float(data['produced_energy'].max()) if 'produced_energy' in data else 1000.0
+        produced_energy = st.slider(
+            "Capacity [MWh]",
+            min_value=min_energy,
+            max_value=max_energy,
+            value=(min_energy, max_energy),
+            key=f"energy_{i}"
+        )
+
+        # Commission Year Slider
+        if 'commission_year' in data:
+            min_year = int(data['commission_year'].min())
+            max_year = int(data['commission_year'].max())
+        else:
+            min_year, max_year = 2000, 2025
+        commission_year = st.slider(
+            "Commission Year",
+            min_value=min_year,
+            max_value=max_year,
+            value=(min_year, max_year),
+            key=f"commission_year_{i}"
+        )
+
+        # Single-select State with "All" option (moved here)
+        state_options = ["All"] + list(data['state'].unique())
+        state = st.selectbox(
+            "State",
+            options=state_options,
+            index=0,
+            key=f"state_{i}"
+        )
+
+        bifacial = st.multiselect(
+            "Bifacial Modules", 
+            ["Yes", "No"], 
+            default=["Yes", "No"], 
+            key=f"bifacial_{i}"
+        )
+        techs = st.multiselect(
+            "Technology", 
+            data['technology'].unique(), 
+            default=data['technology'].unique(), 
+            key=f"tech_{i}"
+        )
+        types = st.multiselect(
+            "Type", 
+            data['type'].unique(), 
+            default=data['type'].unique(), 
+            key=f"type_{i}"
+        )
+
+    # Filtering logic
+    filtered = data[
+        data['type'].isin(types) &
+        data['technology'].isin(techs) &
+        data['source'].isin(sources)
+    ]
+    # State filter (only if not "All")
+    if state != "All":
+        filtered = filtered[filtered['state'] == state]
+    # Bifacial filter as multiselect
+    if set(bifacial) != set(["Yes", "No"]):
+        filtered = filtered[filtered['bifacial'].map(lambda x: "Yes" if x else "No").isin(bifacial)]
+    return filtered
+
+def generate_map(i, filtered, st_folium):
+    m = folium.Map(location=[21.0, 78.0], zoom_start=5)
+    for _, row in filtered.iterrows():
+        popup_html = generate_popup_html(row)
+        marker_color = get_marker_color(row.get("source", ""))
+        folium.Marker(
+            location=[row['lat'], row['lon']],
+            popup=folium.Popup(popup_html, max_width=300),
+            icon=folium.Icon(color=marker_color, icon='bolt', prefix='fa')
+        ).add_to(m)
+    st_folium(m, width="100%", height=700, key=f"map_{i}")
+    
+def get_marker_color(source):
+    if source == "tata":
+        return "black"
+    elif source == "renew":
+        return "green"
+    elif source == "azure":
+        return "orange"
+    else:
+        return "blue"  # default
+    
 def generate_popup_html(row):
     popup_html = f"<b>{row['name']}</b><br>"
     if pd.notna(row.get('image_url', None)) and row['image_url']:
