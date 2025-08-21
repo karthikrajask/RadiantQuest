@@ -1,10 +1,8 @@
-
 # #############################################################################
 # IMPORTS
 # #############################################################################
 import pandas as pd
 import json
-
 import streamlit as st
 from streamlit_folium import st_folium
 
@@ -14,28 +12,19 @@ from app_dataloader import load_investment_data
 import app_page_projects
 import app_page_investment_navigator
 import app_page_tender_navigator
+import app_page_solar_calculator  # NEW
+import app_page_solar_news
 import warnings
 warnings.filterwarnings("ignore")
-
-
-
-
-
 
 # #############################################################################
 # STREAMLIT PAGE CONFIGRUATION
 # #############################################################################
-
-    # Streamlit page config
 st.set_page_config(layout="wide")
-
-
-
 
 # #############################################################################
 # DATA LOADING
-# #############################################################################    
-
+# #############################################################################
 @st.cache_data
 def load_data():
     # Project Data
@@ -53,14 +42,12 @@ def load_data():
         
     # Return Data
     return project_data, investment_data, investment_data_india, tender_data, state_geo
+
 project_data, investment_data, investment_data_india, tender_data, state_geo = load_data()
-
-
-
 
 # #############################################################################
 # USER INTERFACE LAYOUT
-# #############################################################################    
+# #############################################################################
 
 # ########### BANNER
 generate_banner()
@@ -68,9 +55,10 @@ generate_banner()
 # ########### TABS
 tab_names = [
     "🗺️ Projects Overview",
-    # "☀️ Solar Potential Explorer",
     "📈 Investment Navigator",
-    "📄 Tender Explorer"
+    "📄 Tender Explorer",
+    "☀️ Solar Potential Explorer",
+    "📰 Solar News & Insights"
 ]
 tabs = st.tabs(tab_names)
 
@@ -102,6 +90,7 @@ with tabs[1]:
         st.markdown("#### 📊 Your Project Details")
         with st.container(height=400):  # Adjust height as needed
             app_page_investment_navigator.generate_company_details(i, project_data)
+
     # Map
     with col2:
         state_name = app_page_investment_navigator.generate_map(i, filtered, st_folium, state_geo)
@@ -134,7 +123,8 @@ with tabs[2]:
                         f"""
                         <div style="padding:8px 0; border-bottom:1px solid #eee;">
                             ({row['tender_id']}) <b>{row['tender_title']}</b> <br>
-                            <span style="color: #888;">{row['location']}, {row['tender_date']}, <a href="{row['tender_corrigendum']}">Details</a></span>
+                            <span style="color: #888;">{row['location']}, {row['tender_date']}, 
+                            <a href="{row['tender_corrigendum']}">Details</a></span>
                         </div>
                         """,
                         unsafe_allow_html=True
@@ -142,3 +132,11 @@ with tabs[2]:
 
     with col2:
         app_page_tender_navigator.generate_map(i, filtered, st_folium)
+
+# ########### SOLAR POTENTIAL EXPLORER (NEW)
+i = 3
+with tabs[3]:
+    app_page_solar_calculator.generate_ui(i)
+i = 4
+with tabs[4]:
+    app_page_solar_news.show_news_page()
